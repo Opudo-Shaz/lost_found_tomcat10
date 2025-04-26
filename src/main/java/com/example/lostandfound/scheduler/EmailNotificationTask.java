@@ -1,16 +1,16 @@
 package com.example.lostandfound.scheduler;
 
-import com.example.lostandfound.daos.FoundItemDAO;
+import com.example.lostandfound.daos.FoundItemsDAO;
 import com.example.lostandfound.EmailUtil;
-import com.example.lostandfound.entity.FoundItem;
+import com.example.lostandfound.model.FoundItem;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 import java.util.List;
 import java.util.TimerTask;
 
 public class EmailNotificationTask extends TimerTask {
 
-    private final FoundItemDAO foundItemDAO = new FoundItemDAO();
+    private final FoundItemsDAO foundItemDAO = new FoundItemsDAO();
 
     @Override
     public void run() {
@@ -21,7 +21,7 @@ public class EmailNotificationTask extends TimerTask {
                     && foundItem.getName() != null && foundItem.getId() != null) {
 
                 try {
-                    String baseUrl = "http://yourdomain.com"; // replace with actual base URL
+                    String baseUrl = "http://localhost:8080/LostAndfound_system_war_exploded";
                     EmailUtil.sendFollowUpNotification(
                             foundItem.getClaimantEmail(),
                             foundItem.getName(),

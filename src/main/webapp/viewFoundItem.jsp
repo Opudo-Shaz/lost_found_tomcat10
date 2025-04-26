@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <%@ include file="/fragments/head.jsp" %>
-</head>
+    <title>view</title></head>
 <body>
 
 <%@ include file="/fragments/header.jsp" %>
@@ -21,27 +21,30 @@
             <p><strong>Category:</strong> ${foundItem.category}</p>
             <p><strong>Location Found:</strong> ${foundItem.locationFound}</p>
             <p><strong>Finder's Contact:</strong> ${foundItem.finderContact}</p>
-            <p><strong>Date Found:</strong> ${foundItem.dateFound}</p>
+            <p><strong>Date Found:</strong> ${foundItem.foundDate}</p>
             <p><strong>Status:</strong>
                 <c:choose>
-                    <c:when test="${foundItem.status.name == 'UNCLAIMED'}">
+                    <c:when test="${foundItem.status.name() == 'UNCLAIMED'}">
                         <span class="badge bg-info bg-lg rounded-pill">${foundItem.status}</span>
                     </c:when>
-                    <c:when test="${foundItem.status.name == 'PENDING'}">
+                    <c:when test="${foundItem.status.name() == 'PENDING'}">
                         <span class="badge bg-warning rounded-pill">${foundItem.status}</span>
                     </c:when>
-                    <c:when test="${foundItem.status.name == 'CLAIMED'}">
+                    <c:when test="${foundItem.status.name() == 'CLAIMED'}">
                         <span class="badge bg-success rounded-pill">${foundItem.status}</span>
                     </c:when>
-                    <c:when test="${foundItem.status.name == 'DISPUTED'}">
+                    <c:when test="${foundItem.status.name() == 'DISPUTED'}">
                         <span class="badge bg-danger rounded-pill">${foundItem.status}</span>
                     </c:when>
+                    <c:otherwise>
+                        <span class="badge bg-secondary rounded-pill">${foundItem.status}</span>
+                    </c:otherwise>
                 </c:choose>
             </p>
 
             <!-- Show 'Claim Item' button if item is UNCLAIMED -->
-            <c:if test="${foundItem.status.name == 'UNCLAIMED'}">
-                <a href="${pageContext.request.contextPath}/found-items/claim/${foundItem.id}" class="btn btn-primary btn-lg btn-claim">Claim Item</a>
+            <c:if test="${foundItem.status.name() == 'UNCLAIMED'}">
+                <a href="${pageContext.request.contextPath}/found-items?action=claim&id=${foundItem.id}" class="btn btn-primary btn-lg btn-claim">Claim Item</a>
             </c:if>
         </div>
     </c:if>
@@ -55,7 +58,9 @@
 </div>
 
 <!-- Back to the list -->
-<a href="${pageContext.request.contextPath}/found-items" class="btn btn-secondary btn-lg btn-back">Back to List</a>
+<div class="container mt-4">
+    <a href="${pageContext.request.contextPath}/found-items" class="btn btn-secondary btn-lg btn-back">Back to List</a>
+</div>
 
 <%@ include file="/fragments/landing-footer.jsp" %>
 </body>

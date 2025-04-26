@@ -30,10 +30,10 @@
             </tr>
             <tr>
                 <th>Date Lost</th>
-                <td>
-                    <fmt:formatDate value="${item.dateLost}" pattern="yyyy-MM-dd HH:mm:ss" />
-                </td>
+                <td>${item.dateLost}</td>
+
             </tr>
+
             </tbody>
         </table>
 
