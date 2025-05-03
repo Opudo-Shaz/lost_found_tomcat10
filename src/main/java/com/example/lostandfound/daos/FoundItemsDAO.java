@@ -1,6 +1,5 @@
 package com.example.lostandfound.daos;
 
-import com.example.lostandfound.connection.DBconnection;
 import com.example.lostandfound.model.FoundItem;
 
 import java.sql.*;
@@ -327,4 +326,57 @@ public class FoundItemsDAO {
 
         return pendingItems;
     }
+
+    public List<FoundItem> getFilteredFoundItems(String category, String location, String fromDate, String toDate, String status) {
+        List<FoundItem> filteredItems = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM found_items WHERE 1=1");
+        List<Object> parameters = new ArrayList<>();
+
+        if (category != null && !category.isEmpty()) {
+            sql.append(" AND category = ?");
+            parameters.add(category.trim());
+        }
+        if (location != null && !location.isEmpty()) {
+            sql.append(" AND location_found LIKE ?");
+            parameters.add("%" + location.trim() + "%");
+        }
+        if (fromDate != null && !fromDate.isEmpty()) {
+            sql.append(" AND found_date >= ?");
+            parameters.add(java.sql.Date.valueOf(fromDate));
+        }
+        if (toDate != null && !toDate.isEmpty()) {
+            sql.append(" AND found_date <= ?");
+            parameters.add(java.sql.Date.valueOf(toDate));
+        }
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND status = ?");
+            parameters.add(status.trim());
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parameters.size(); i++) {
+                Object param = parameters.get(i);
+                if (param instanceof java.sql.Date) {
+                    stmt.setDate(i + 1, (java.sql.Date) param);
+                } else {
+                    stmt.setString(i + 1, param.toString());
+                }
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                filteredItems.add(mapResultSetToFoundItem(rs));
+            }
+
+        } catch (SQLException e) {
+            logger.severe("Error filtering found items: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return filteredItems;
+    }
+
+
 }

@@ -36,7 +36,7 @@
                     <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Login to your account</h2>
 
                     <!-- Login Form -->
-                    <form action="<c:url value='/auth' />" method="post">
+                    <form action="<c:url value='/auth' />" method="post" accept-charset="UTF-8">
                         <input type="hidden" name="action" value="login" />
 
                         <div class="row gy-2 overflow-hidden">

@@ -24,6 +24,9 @@ public class LostItemsDAO {
         item.setDateLost(rs.getString("date_lost"));
         item.setLocationLost(rs.getString("location_lost"));
         item.setOwnerEmail(rs.getString("owner_email"));
+        item.setOwnerConfirmed(rs.getBoolean("owner_confirmed"));
+        item.setFinderConfirmed(rs.getBoolean("finder_confirmed"));
+
 
         return item;
     }
@@ -193,6 +196,80 @@ public class LostItemsDAO {
         item.setDateLost(rs.getString("date_lost"));
         item.setLocationLost(rs.getString("location_lost"));
         item.setOwnerEmail(rs.getString("owner_email"));
+        item.setOwnerConfirmed(rs.getBoolean("owner_confirmed"));
+        item.setFinderConfirmed(rs.getBoolean("finder_confirmed"));
+
         return item;
     }
+
+    public List<LostItem> getFilteredLostItems(String category, String fromDate, String toDate, String locationLost) {
+        List<LostItem> filteredItems = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM lost_items WHERE 1=1");
+        List<String> parameters = new ArrayList<>();
+
+        if (category != null && !category.trim().isEmpty()) {
+            sql.append(" AND category = ?");
+            parameters.add(category.trim());
+        }
+
+        if (locationLost != null && !locationLost.trim().isEmpty()) {
+            sql.append(" AND location_lost LIKE ?");
+            parameters.add("%" + locationLost.trim() + "%");
+        }
+
+        if (fromDate != null && !fromDate.trim().isEmpty()) {
+            sql.append(" AND date_lost >= ?");
+            parameters.add(fromDate.trim());
+        }
+
+        if (toDate != null && !toDate.trim().isEmpty()) {
+            sql.append(" AND date_lost <= ?");
+            parameters.add(toDate.trim());
+        }
+
+        try (Connection conn = DBconnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parameters.size(); i++) {
+                stmt.setString(i + 1, parameters.get(i));
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                filteredItems.add(mapResultSetToLostItem(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return filteredItems;
+    }
+
+    public void confirmByOwner(Long id) {
+        String sql = "UPDATE lost_items SET owner_confirmed = TRUE WHERE id = ?";
+
+        try (Connection conn = DBconnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void confirmByFinder(Long id) {
+        String sql = "UPDATE lost_items SET finder_confirmed = TRUE WHERE id = ?";
+
+        try (Connection conn = DBconnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

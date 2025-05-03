@@ -11,9 +11,22 @@
 
 <div class="container mt-5">
     <h2 class="mb-4">Admin - User Management</h2>
+    <%
+        String flash = (String) session.getAttribute("flash");
+        if (flash != null) {
+    %>
+    <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+        <%= flash %>
+    </div>
+    <%
+            session.removeAttribute("flash");
+        }
+    %>
+
 
     <!-- Add User Form -->
-    <form action="addUser" method="post" class="mb-4">
+    <form action="${pageContext.request.contextPath}/admin/users" method="post" class="mb-4">
+        <input type="hidden" name="action" value="add">
         <div class="form-row">
             <div class="col">
                 <label>
@@ -60,7 +73,8 @@
                 <td>${user.role}</td>
                 <td>
                     <!-- Edit Form -->
-                    <form action="editUser" method="post" class="d-inline">
+                    <form action="${pageContext.request.contextPath}/admin/users" method="post" class="d-inline">
+                        <input type="hidden" name="action" value="update">
                         <input type="hidden" name="id" value="${user.id}">
                         <label>
                             <input type="text" name="username" value="${user.username}" class="form-control d-inline w-auto" required>
@@ -78,7 +92,8 @@
                     </form>
 
                     <!-- Delete Form -->
-                    <form action="deleteUser" method="post" class="d-inline ml-2">
+                    <form action="${pageContext.request.contextPath}/admin/users" method="post" class="d-inline ml-2">
+                        <input type="hidden" name="action" value="delete">
                         <input type="hidden" name="id" value="${user.id}">
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>

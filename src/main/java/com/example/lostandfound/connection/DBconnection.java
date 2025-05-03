@@ -13,6 +13,7 @@ public class DBconnection {
             String jdbcUsername = "root";
             String jdbcPassword = "shara2010@NOT";
             return DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             throw new SQLException(e);

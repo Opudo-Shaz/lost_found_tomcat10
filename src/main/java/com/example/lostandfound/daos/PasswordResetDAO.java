@@ -55,7 +55,7 @@ public class PasswordResetDAO {
             );
 
 
-            EmailUtil.sendEmail(email, subject, body, true);
+            EmailUtil.sendEmail(email, subject, body);
 
         } catch (Exception e) {
             e.printStackTrace();

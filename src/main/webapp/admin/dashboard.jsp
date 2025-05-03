@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Include common header -->
     <%@ include file="/fragments/head.jsp" %>
 
@@ -56,20 +59,21 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<c:url value='/lostItems.jsp'/>" class="nav-link">
+                        <a href="<c:url value='/lost-items'/>" class="nav-link">
                             <i class="nav-icon fas fa-briefcase"></i>
                             <p>Manage Lost Items</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="<c:url value='/foundItems.jsp'/>" class="nav-link">
+                        <a href="<c:url value='/found-items'/>" class="nav-link">
                             <i class="nav-icon fas fa-briefcase"></i>
                             <p>Manage Found Items</p>
+
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<c:url value='/usermanagement.jsp'/>" class="nav-link">
+                        <a href="${pageContext.request.contextPath}/admin/users" class="nav-link">
                             <i class="nav-icon fas fa-users-cog"></i>
                             <p>User Management</p>
                         </a>
@@ -116,7 +120,7 @@
                             <div class="icon">
                                 <i class="fa fa-users"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="${pageContext.request.contextPath}/admin/users" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-4 col-6">
@@ -128,8 +132,11 @@
                             <div class="icon">
                                 <i class="fa fa-briefcase"></i>
                             </div>
-                            <a href="<c:url value='/lostItems.jsp'/>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
+                            <a href="<c:url value='/lost-items'/>" class="nav-link">
+                                <i class="nav-icon fas fa-briefcase"></i>
+                                <p>Manage Lost Items</p>
+                            </a>
+                           </div>
                     </div>
                     <div class="col-lg-4 col-6">
                         <div class="small-box bg-success">
@@ -140,14 +147,20 @@
                             <div class="icon">
                                 <i class="fa fa-briefcase"></i>
                             </div>
-                            <a href="<c:url value='/foundItems.jsp'/>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
+                            <a href="<c:url value='/found-items'/>" class="nav-link">
+                                <i class="nav-icon fas fa-briefcase"></i>
+                                <p>Manage Found Items</p>
+                            </a>
+                           </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 </div>
+
+<!-- Bootstrap 5.3 JavaScript Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Include common footer -->
 <%@ include file="/fragments/landing-footer.jsp" %>

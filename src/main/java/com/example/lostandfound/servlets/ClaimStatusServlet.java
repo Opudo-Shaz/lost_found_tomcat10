@@ -8,7 +8,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/claimStatus")
+@WebServlet("/found-items/claimStatus")
 public class ClaimStatusServlet extends HttpServlet {
 
     private FoundItemsDAO foundItemDAO;

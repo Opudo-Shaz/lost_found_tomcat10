@@ -12,6 +12,9 @@
 
 <div class="container">
     <h1 class="mt-4">Post Found Item</h1>
+    <%
+        java.time.LocalDate today = java.time.LocalDate.now();
+    %>
 
     <!-- JSP Form -->
     <form action="${pageContext.request.contextPath}/found-items" method="post" enctype="multipart/form-data">
@@ -59,7 +62,8 @@
         <!-- Date Found -->
         <div class="form-group">
             <label for="dateFound">Date Found</label>
-            <input type="date" id="dateFound" name="dateFound" class="form-control" value="${foundItem.dateFound}" />
+            <input type="date" id="dateFound" name="dateFound" class="form-control"
+                   value="${foundItem.dateFound}" max="<%= today %>" />
         </div>
 
         <!-- Image Upload -->

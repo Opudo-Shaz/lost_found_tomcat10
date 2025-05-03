@@ -7,6 +7,10 @@ public class LostItem extends Item {
     private String dateLost;          // You can use String for simplicity, or LocalDate
     private String locationLost;
     private String ownerEmail;
+    private boolean ownerConfirmed;
+    private boolean finderConfirmed;
+
+
 
 
     public LostItem(Long id, String name, String description, String category, String currentLocation,
@@ -21,11 +25,31 @@ public class LostItem extends Item {
         this.ownerEmail = ownerEmail;
     }
 
+    public boolean isMarkedAsFound() {
+        return ownerConfirmed && finderConfirmed;
+    }
+
+
     public LostItem() {
         super();
     }
 
     // Getters and setters below
+    public boolean isOwnerConfirmed() {
+        return ownerConfirmed;
+    }
+
+    public void setOwnerConfirmed(boolean ownerConfirmed) {
+        this.ownerConfirmed = ownerConfirmed;
+    }
+
+    public boolean isFinderConfirmed() {
+        return finderConfirmed;
+    }
+
+    public void setFinderConfirmed(boolean finderConfirmed) {
+        this.finderConfirmed = finderConfirmed;
+    }
 
     public Long getId() {
         return id;

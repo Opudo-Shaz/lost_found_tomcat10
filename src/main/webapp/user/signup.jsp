@@ -86,6 +86,13 @@
                                     <label for="password">Password</label>
                                 </div>
                             </div>
+                            <!-- Confirm Password -->
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+                                    <label for="confirm_password">Confirm Password</label>
+                                </div>
+                            </div>
 
                             <!-- Contact -->
                             <div class="col-12">

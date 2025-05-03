@@ -27,7 +27,7 @@
     </c:if>
 
     <!-- Form to claim the found item -->
-    <form action="${pageContext.request.contextPath}/found-items/save-claim/${claim.itemId}" method="post" enctype="multipart/form-data">
+    <form action="${pageContext.request.contextPath}/found-items/save-claim/${param.id}" method="post" enctype="multipart/form-data">
 
         <!-- Hidden field for itemId -->
         <input type="hidden" name="itemId" value="${claim.itemId}" />
@@ -43,7 +43,6 @@
             <label for="claimerContact" class="form-label">Your Phone Number</label>
             <input type="text" class="form-control" id="claimerContact" name="claimerContact" required />
         </div>
-
 
         <!-- Ownership Note -->
         <div class="mb-3">

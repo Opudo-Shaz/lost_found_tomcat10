@@ -44,8 +44,9 @@
 
             <!-- Show 'Claim Item' button if item is UNCLAIMED -->
             <c:if test="${foundItem.status.name() == 'UNCLAIMED'}">
-                <a href="${pageContext.request.contextPath}/found-items?action=claim&id=${foundItem.id}" class="btn btn-primary btn-lg btn-claim">Claim Item</a>
+                <a href="${pageContext.request.contextPath}/claimFoundItem.jsp?id=${foundItem.id}" class="btn btn-primary btn-lg btn-claim">Claim Item</a>
             </c:if>
+
         </div>
     </c:if>
 

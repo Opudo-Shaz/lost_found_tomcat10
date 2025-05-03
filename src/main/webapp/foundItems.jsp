@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%@ include file="/fragments/head.jsp" %>
-    <title>Found Items</title></head>
+    <title>Found Items</title>
+</head>
 
 <body>
 <%@ include file="/fragments/header.jsp" %>
@@ -20,6 +21,10 @@
     </form>
 
     <h1 class="mt-4">Found Items</h1>
+    <a href="${pageContext.request.contextPath}/report?type=found" class="btn btn-success">
+        Generate Report
+    </a>
+
     <div>
         <a href="${pageContext.request.contextPath}/found-items?action=post-found-item" class="btn btn-primary m-2">Add Found Item</a>
     </div>
@@ -63,20 +68,18 @@
                     </c:choose>
                 </td>
 
-
                 <td>
                     <div class="btn-group" role="group">
                         <div class="d-flex">
                             <!-- View button is visible to all users -->
                             <a href="${pageContext.request.contextPath}/found-items?action=view&id=${item.id}" class="btn btn-info">View</a>
 
-                            <!-- Edit and Delete buttons only visible for admin -->
-                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <!-- Admin-only -->
+                            <c:if test="${sessionScope.role == 'ADMIN'}">
                                 <a href="${pageContext.request.contextPath}/found-items?action=edit&id=${item.id}" class="btn btn-warning btn-sm">Edit</a>
                                 <a href="${pageContext.request.contextPath}/found-items?action=delete&id=${item.id}" class="btn btn-danger btn-sm"
                                    onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
-
-                            </sec:authorize>
+                            </c:if>
                         </div>
                     </div>
                 </td>

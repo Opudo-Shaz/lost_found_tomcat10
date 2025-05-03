@@ -25,7 +25,7 @@ public class AdminDashboardServlet extends HttpServlet {
             request.setAttribute("totalLostItems", totalLostItems);
             request.setAttribute("totalFoundItems", totalFoundItems);
 
-            request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/dashboard.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();

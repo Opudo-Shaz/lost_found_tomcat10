@@ -44,7 +44,7 @@ public class LostItemsServlet extends HttpServlet {
             // Delete action: Delete lost item by ID
             Long id = Long.parseLong(request.getParameter("id"));
             lostItemsDAO.deleteLostItem(id);
-            response.sendRedirect(request.getContextPath() + "/lost-items?action=view");
+            response.sendRedirect(request.getContextPath() + "/lost-items");
 
         } else if ("view".equals(action)) {
             // View action: Show details of a single lost item by ID

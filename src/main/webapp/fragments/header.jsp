@@ -28,7 +28,7 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.username}">
                         <li>
-                            <a href="${pageContext.request.contextPath}/logout" class="logout-link">Logout</a>
+                            <a href="${pageContext.request.contextPath}/login" class="logout-link">Logout</a>
                         </li>
                     </c:when>
                     <c:otherwise>

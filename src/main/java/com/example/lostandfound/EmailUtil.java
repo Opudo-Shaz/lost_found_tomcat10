@@ -7,9 +7,9 @@ import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class EmailUtil {
-
+    static boolean isHtml = true;
     private static final String FROM_EMAIL = "patikalostandfound@gmail.com";
-    private static final String PASSWORD = "your_app_password"; // Use app password if using Gmail
+    private static final String PASSWORD = "rtos djvp dque xtqr";
 
     private static Session getSession() {
         Properties props = new Properties();
@@ -25,7 +25,7 @@ public class EmailUtil {
         });
     }
 
-    public static void sendEmail(String recipientEmail, String subject, String body, boolean isHtml) throws MessagingException {
+    public static void sendEmail(String recipientEmail, String subject, String body) throws MessagingException {
         if (recipientEmail == null || recipientEmail.isEmpty()) {
             throw new IllegalArgumentException("Recipient email is missing or invalid.");
         }
@@ -58,7 +58,7 @@ public class EmailUtil {
                 itemName, claimedBy, claimerContact, claimerNote, claimerImages
         );
 
-        sendEmail(finderEmail, subject, body, true);
+        sendEmail(finderEmail, subject, body);
     }
 
     public static void sendClaimantNotificationEmail(String claimantEmail, String itemName, String finderContact, String locationFound) throws MessagingException {
@@ -80,7 +80,7 @@ public class EmailUtil {
                 itemName, finderContact, locationFound
         );
 
-        sendEmail(claimantEmail, subject, body, true);
+        sendEmail(claimantEmail, subject, body);
     }
 
     public static void sendFollowUpNotification(String claimantEmail, String itemName, Long itemId, String baseUrl) throws MessagingException {
@@ -93,16 +93,17 @@ public class EmailUtil {
                         "    <p>We noticed that the item you claimed (<strong>%s</strong>) is still marked as pending in our system.</p>\n" +
                         "    <p>Please let us know if you have retrieved it by clicking one of the buttons below:</p>\n" +
                         "    <p>\n" +
-                        "        <a href=\"%s/claimStatus?id=%d&status=yes\" style=\"padding: 10px 20px; color: white; background-color: green; text-decoration: none; border-radius: 5px;\">Yes</a>\n" +
-                        "        <a href=\"%s/claimStatus?id=%d&status=no\" style=\"padding: 10px 20px; color: white; background-color: red; text-decoration: none; border-radius: 5px;\">No</a>\n" +
+                        "        <a href=\"%s/found-items/claimStatus?id=%d&status=yes\" style=\"padding: 10px 20px; color: white; background-color: green; text-decoration: none; border-radius: 5px;\">Yes</a>\n" +
+                        "        <a href=\"%s/found-items/claimStatus?id=%d&status=no\" style=\"padding: 10px 20px; color: white; background-color: red; text-decoration: none; border-radius: 5px;\">No</a>\n" +
                         "    </p>\n" +
                         "    <p>Thank you,</p>\n" +
-                        "    <p>Patika Lost and Found System Team</p>\n" +
+                        "    <p>Patika Lost and Found Team</p>\n" +
                         "</body>\n" +
                         "</html>",
                 itemName, baseUrl, itemId, baseUrl, itemId
         );
 
-        sendEmail(claimantEmail, subject, body, true);
+        sendEmail(claimantEmail, subject, body);
     }
+
 }

@@ -12,6 +12,9 @@
 
 <div class="container">
     <h1 class="mt-4">Post-Lost Item</h1>
+    <%
+        java.time.LocalDate today = java.time.LocalDate.now();
+    %>
 
     <!-- JSP Form for Posting Lost Item -->
     <form action="${pageContext.request.contextPath}/lost-items" method="post" enctype="multipart/form-data">
@@ -60,8 +63,10 @@
         <!-- Date Lost -->
         <div class="form-group">
             <label for="dateLost">Date Lost</label>
-            <input type="date" id="dateLost" name="dateLost" class="form-control" value="${item.dateLost}" required />
+            <input type="date" id="dateLost" name="dateLost" class="form-control"
+                   value="${item.dateLost}" max="<%= today %>" required />
         </div>
+
 
         <!-- Image Upload -->
         <div class="form-group">
