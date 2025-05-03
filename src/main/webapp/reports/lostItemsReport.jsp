@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <%@ include file="../fragments/head.jsp" %>
     <title>Lost Items Report</title>
-
 </head>
 
 <body>
@@ -13,52 +13,6 @@
 
 <div class="container">
     <h1 class="mt-4">📄 Lost Items Report</h1>
-    <%
-        java.time.LocalDate today = java.time.LocalDate.now();
-    %>
-
-
-    <!-- Filter Form -->
-    <form method="GET" action="${pageContext.request.contextPath}/report">
-        <input type="hidden" name="type" value="lost">
-        <div class="row">
-            <!-- Category Filter -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="category">Category:</label>
-                    <input type="text" class="form-control" name="category" value="${category}">
-                </div>
-            </div>
-
-            <!-- From Date Filter -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="fromDate">From Date:</label>
-                    <input type="date" class="form-control" name="fromDate" value="${fromDate}" max="<%= today %>" >
-                </div>
-            </div>
-
-            <!-- To Date Filter -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="toDate">To Date:</label>
-                    <input type="date" class="form-control" name="toDate" value="${toDate}" max="<%= today %>" >
-                </div>
-            </div>
-
-            <!-- Location Filter -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="location">Location Lost:</label>
-                    <input type="text" class="form-control" name="location" value="${location}">
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">View Report</button>
-        </div>
-    </form>
 
     <c:if test="${empty items}">
         <div class="alert alert-warning mt-3">No lost items to display.</div>
