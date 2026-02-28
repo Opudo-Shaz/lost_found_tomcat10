@@ -1,0 +1,79 @@
+A list of common issues you might run into with a CircleCI setup for a Maven WAR project using Java 21, 
+along with explanations and fixes:
+
+---
+
+### **1. `mvn: command not found`**
+
+**Cause:** The Docker image used in the job has Java but does not include Maven.
+**Fix:** Use a Docker image that already has Maven installed. For example:
+
+```yaml
+docker:
+  - image: cimg/openjdk:21.0
+```
+
+or manually install Maven in the job before running any `mvn` commands:
+
+```bash
+sudo apt-get update && sudo apt-get install -y maven
+```
+
+---
+
+### **2. Build fails due to Java version mismatch**
+
+**Cause:** Your `pom.xml` specifies Java 11 for `maven.compiler.source` and `maven.compiler.target`, but the Docker image has Java 21. Some plugins or dependencies may behave differently or fail.
+**Fix:**
+
+* Either update the `pom.xml` to match Java 21:
+
+```xml
+<maven.compiler.source>21</maven.compiler.source>
+<maven.compiler.target>21</maven.compiler.target>
+```
+
+* Or use a Docker image that matches your pom.xml (e.g., Java 11).
+
+---
+
+### **3. Tests fail due to missing database or environment variables**
+
+**Cause:** Your unit tests may require a MySQL database or other services. CircleCI runs jobs in isolated containers, so these dependencies are missing.
+**Fix:**
+
+* Use a CircleCI **service container** for MySQL:
+
+```yaml
+docker:
+  - image: cimg/openjdk:21.0
+  - image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lost_found_db
+```
+
+* Configure your tests to use these environment variables for database connection.
+
+---
+
+### **4. Caching issues causing stale dependencies**
+
+**Cause:** If Maven dependencies change but CircleCI restores an old cache, builds may fail or use outdated libraries.
+**Fix:**
+
+* Use the checksum of `pom.xml` to ensure cache invalidation:
+
+```yaml
+restore_cache:
+  keys:
+    - maven-deps-{{ checksum "pom.xml" }}
+```
+
+* Always run `mvn dependency:resolve` after restoring cache to make sure all required dependencies are available.
+
+---
+
+These four issues cover most of the common CircleCI pitfalls for your setup. If you want, I can also draft a **small troubleshooting guide** directly in your CircleCI YAML to auto-check these things before the build runs, which helps avoid failed jobs.
+
+Do you want me to do that?

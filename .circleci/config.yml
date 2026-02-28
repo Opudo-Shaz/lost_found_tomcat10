@@ -1,12 +1,9 @@
 version: 2.1
 
-orbs:
-  maven: circleci/maven@2.1
-
 jobs:
   build-and-test:
     docker:
-      - image: eclipse-temurin:21-jdk   # JDK 21
+      - image: cimg/openjdk:21.0   # JDK 21 + Maven preinstalled
     working_directory: ~/repo
     steps:
       - checkout
