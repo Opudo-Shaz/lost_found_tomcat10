@@ -1,0 +1,25 @@
+stages:
+	- build_and_test
+
+variables:
+	MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+build-and-test:
+	stage: build_and_test
+	image: maven:3.9.9-eclipse-temurin-21
+	cache:
+		key:
+			files:
+				- pom.xml
+		paths:
+			- .m2/repository
+		policy: pull-push
+	script:
+		- mvn --batch-mode dependency:resolve
+		- mvn --batch-mode test
+		- mvn --batch-mode clean package
+	artifacts:
+		name: build-artifacts
+		paths:
+			- target/
+		expire_in: 1 week
