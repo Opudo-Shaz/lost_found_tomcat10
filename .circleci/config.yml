@@ -18,12 +18,14 @@ jobs:
           paths:
             - ~/.m2
           key: maven-deps-{{ checksum "pom.xml" }}
-      - run:
-          name: Compile and Build WAR
-          command: mvn clean package
+
       - run:
           name: Run Unit Tests
           command: mvn test
+      - run:
+          name: Compile and Build WAR
+          command: mvn clean package
+
       - store_artifacts:
           path: target
           destination: build-artifacts

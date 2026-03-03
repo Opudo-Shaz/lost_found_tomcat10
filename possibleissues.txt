@@ -72,8 +72,3 @@ restore_cache:
 
 * Always run `mvn dependency:resolve` after restoring cache to make sure all required dependencies are available.
 
----
-
-These four issues cover most of the common CircleCI pitfalls for your setup. If you want, I can also draft a **small troubleshooting guide** directly in your CircleCI YAML to auto-check these things before the build runs, which helps avoid failed jobs.
-
-Do you want me to do that?
